@@ -1,5 +1,51 @@
 <!--index.wxml-->
 <view class="container">
+  <!-- <ez-navigation-bar back="{{true}}" home="{{true}}" searchBar="{{true}}" title="123" theme="dark" color='red' background='yellow'></ez-navigation-bar> -->
+  <!-- <ez-navigation-bar back="{{true}}" home="{{true}}" searchBar="{{true}}" title="123" theme="dark" color='' background=''></ez-navigation-bar> -->
+
+  <ez-navigation-bar back="{{true}}" home="{{true}}" searchBar="{{true}}" title="999" theme="dark" color=''
+    background=''></ez-navigation-bar>
+
+  <!-- <navBar title='详情页' background='#fff' back="{{true}}" bindback="handlerGobackClick"></navBar> -->
+  <view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='test'>测试
+    </view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='back'>back
+    </view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='home'>home
+    </view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='back+home'>
+      back+home</view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='title'>title
+    </view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='back+title'>
+      back+title</view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo'
+      data-type='back+home+title'>back+home+title</view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='search'>
+      search</view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='back+search'>
+      back+search</view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo'
+      data-type='back+home+search'>back+home+search</view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='customLeft'>
+      customLeft</view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo'
+      data-type='customCenter'>customCenter</view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='customRight'>
+      customRight</view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo'
+      data-type='transparent+noframe'>导航条透明不占位</view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='update'>动态
+    </view>
+    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='update'>下拉刷新
+    </view>
+
+    <!-- <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='test'>测试</view>
+  <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='test'>测试</view> -->
+
+  </view>
+
   <view class="userinfo">
     <block wx:if="{{canIUseOpenData}}" calss="userinfo-opendata">
       <view class="userinfo-avatar" bindtap="bindViewTap">

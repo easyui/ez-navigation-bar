@@ -44,5 +44,12 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-  }
+  },
+  navigatItem (e) {
+    const url = e.currentTarget.dataset.url 
+    const type = e.currentTarget.dataset.type 
+    wx.navigateTo({
+      url:`${url}?type=${type}`,
+    })
+  },
 })

@@ -1,0 +1,61 @@
+<!--components/ez-navigation-bar/ez-navigation-bar.wxml-->
+
+<view class="ez-navigation-bar {{extClass}}" style="{{navigationBarStyle}} ;background: {{background}};">
+  <view  class="ez-navigation-bar-container" style="{{navigationBarStyle}} ;background: {{background}};">
+
+
+  <!-- <view class="weui-navigation-bar__placeholder {{ios ? 'ios' : 'android'}}" style="padding-top: {{statusBarHeight}}px;visibility: hidden;"></view> -->
+
+  <view class="ez-status-bar" style="{{statusBarStyle}};background: {{background}};"></view>
+  <view class="ez-inner" style="{{innerStyle}};background: {{background}};">
+    <view class='ez-inner__left' style="{{innerLeftStyle}}">
+      <!-- <block wx:if="{{back}}">
+        <view class="weui-navigation-bar__buttons">
+          <view bindtap="back" class="weui-navigation-bar__button weui-navigation-bar__btn_goback"
+            hover-class="weui-active"></view>
+        </view>
+      </block>
+      <block wx:else>
+        <slot name="left"></slot>
+      </block> -->
+
+      <block wx:if="{{back&&!home}}">
+        <view bindtap="backAction" class="ez-inner__button ez-inner__btn_goback {{leftIconColor}}"></view>
+      </block>
+      <block wx:elif="{{!back&&home}}">
+        <view bindtap="homeAction" class="ez-inner__button ez-inner__btn_gohome {{leftIconColor}}"></view>
+      </block>
+      <block wx:if="{{back && home}}">
+        <view class="ez-inner__buttons {{ios ? 'ios' : 'android'}}" >
+          <view bindtap="backAction" class="ez-inner__button ez-inner__btn_goback {{leftIconColor}}" >
+          </view>
+          <view bindtap="homeAction" class="ez-inner__button ez-inner__btn_gohome {{leftIconColor}}"  ></view>
+        </view>
+      </block>
+      <block wx:else>
+        <!-- 自定义整个navigation bar建议使用左边区域 -->
+        <slot name="left"></slot>
+      </block>
+    </view>
+
+    <view class='ez-inner__center' style="{{innerCenterStyle}}">
+      <!-- <view wx:if="{{loading}}" class="line-spin-fade-loader">
+        <view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11,12]}}"></view>
+      </view> -->
+      <block wx:if="{{title}}">
+        <text class='ez-inner__center-title' style="color: {{color}};">{{title}}</text>
+      </block>
+      <view wx:elif="{{searchBar}}" class='ez-inner-search' style="{{innerSearchBarStyle}}"  bindtap="searchAction">
+                <view class='ez-inner-search__icon' />
+                <view class='ez-inner-search__input'>{{searchText}}</view>
+            </view>
+      <block wx:else>
+        <slot name="center"></slot>
+      </block>
+    </view>
+    <view class='ez-inner__right'>
+      <slot name="right"></slot>
+    </view>
+  </view>
+</view>
+</view>

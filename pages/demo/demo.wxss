@@ -1,0 +1,43 @@
+/* pages/demo/demo.wxss */
+
+.custom{
+  background: rgb(0, 204, 255);
+  height: 80rpx;
+  width: 80rpx;
+  /* width:100% */
+}
+
+.right-image{
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.testBtn{
+  background: green;
+  padding: 10rpx 10rpx;
+  margin-bottom:2rpx
+
+
+}
+
+.nav-transparent {
+  height: 0;
+}
+
+.logo {
+  /* prettier-ignore */
+  width: 100%;
+  height: 400rpx;
+  background: green;
+  font-size: 30rpx;
+  line-height: 60rpx;
+  text-align: center;
+}
+
+.img {
+  width: 100%;
+  height: 400rpx;
+  line-height: 400rpx;
+  color: #fff;
+  background: linear-gradient(280deg, #fff 0%, red 50%, blue 80%);
+}

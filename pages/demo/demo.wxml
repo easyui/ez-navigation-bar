@@ -1,0 +1,96 @@
+<!--pages/demo/demo.wxml-->
+<view class="container">
+  <block wx:if="{{type == 'test'}}">
+    <ez-navigation-bar back="{{true}}" home="{{true}}" searchBar="{{true}}" title="" theme="dark" color=''
+      background=''  bindback="backTap" bindhome="homeTap"  bindsearch="searchTap"></ez-navigation-bar>
+  </block>
+  <block wx:if="{{type == 'back'}}">
+    <ez-navigation-bar back="{{true}}"></ez-navigation-bar>
+  </block>
+  <block wx:if="{{type == 'home'}}">
+    <ez-navigation-bar home="{{true}}"></ez-navigation-bar>
+  </block>
+  <block wx:if="{{type == 'back+home'}}">
+    <ez-navigation-bar back="{{true}}" home="{{true}}"></ez-navigation-bar>
+  </block>
+  <block wx:if="{{type == 'title'}}" >
+    <ez-navigation-bar  title="我是title"></ez-navigation-bar>
+  </block>
+  <block wx:if="{{type == 'back+title'}}">
+    <ez-navigation-bar back="{{true}}" title="我是title"></ez-navigation-bar>
+  </block>
+  <block wx:if="{{type == 'back+home+title'}}">
+    <ez-navigation-bar back="{{true}}" home="{{true}}" title="我是title"></ez-navigation-bar>
+  </block>
+  <block wx:if="{{type == 'search'}}" >
+    <ez-navigation-bar  searchBar="{{true}}" ></ez-navigation-bar>
+  </block>
+  <block wx:if="{{type == 'back+search'}}">
+    <ez-navigation-bar back="{{true}}" searchBar="{{true}}"></ez-navigation-bar>
+  </block>
+  <block wx:if="{{type == 'back+home+search'}}">
+    <ez-navigation-bar back="{{true}}" home="{{true}}" searchBar="{{true}}"></ez-navigation-bar>
+  </block>
+  <block wx:if="{{type == 'customLeft'}}">
+    <ez-navigation-bar>
+      <view class='custom' slot="left">
+        customLeft1234567890123456789012345678901234567890
+      </view>
+    </ez-navigation-bar>
+  </block>
+  <block wx:if="{{type == 'customCenter'}}">
+    <ez-navigation-bar>
+      <view class='custom' slot="center">
+        customLeft1234567890123456789012345678901234567890
+      </view>
+    </ez-navigation-bar>
+  </block>
+  <block wx:if="{{type == 'customRight'}}">
+    <ez-navigation-bar>
+      <!-- <view class='custom' slot="right">
+        customLeft1234567890123456789012345678901234567890
+      </view> -->
+      <!-- <view class='custom' slot="left">
+        customLeft1234567890123456789012345678901234567890
+      </view> -->
+      <image class='right-image' src='../../images/wechat_friend_share.png' mode="aspectFill" slot="right"></image>
+
+    </ez-navigation-bar>
+  </block>
+
+  <block wx:if="{{type == 'transparent+noframe'}}">
+    <View class='nav-transparent'>
+        <ez-navigation-bar title='自定义样式' background='rgba(0,0,0,0)' color='#fff' back="{{true}}" home="{{true}}" iconTheme='white' bindback="handlerGobackClick"></ez-navigation-bar>
+    </View>
+    <View class='logo'>
+        <View class='img'>此处为图片背景</View>
+    </View>
+  </block>
+
+  <block wx:if="{{type == 'update'}}">
+    <ez-navigation-bar back="{{true}}" home="{{true}}" searchBar="{{true}}" title="{{title}}" theme="dark" color="{{color}}"
+      background='{{background}}'  bindback="backTap" bindhome="homeTap"  bindsearch="searchTap"></ez-navigation-bar>
+    <view class='testBtn' bindtap='updateNavBar' data-type='title'>更新title</view>
+  <view class='testBtn' bindtap='updateNavBar' data-type='titleColor'>更新title color</view>
+  <view class='testBtn' bindtap='updateNavBar' data-type='gbColor'>更新背景色</view>
+  </block>
+
+
+
+  <text>11111111</text>
+  <text>pages/demo/demo.wxml</text>
+
+  <text>pages/demo/demo.wxml</text>
+  <text>pages/demo/demo.wxml</text>
+  <text>pages/demo/demo.wxml</text>
+  <text>pages/demo/demo.wxml</text>
+  <text>pages/demo/demo.wxml</text>
+  <text>pages/demo/demo.wxml</text>
+  <text>pages/demo/demo.wxml</text>
+  <text>pages/demo/demo.wxml</text>
+  <text>pages/demo/demo.wxml</text>
+  <text>pages/demo/demo.wxml</text>
+  <text>pages/demo/demo.wxml</text>
+  <text>pages/demo/demo.wxml</text>
+
+</view>
