@@ -152,7 +152,7 @@ page {
   /* display: -webkit-box; */
   /* display: -webkit-flex; */
   align-items: center;
-  /*justify-content: center;  */  /* 按安卓的风格，title 左对齐 */
+  justify-content: center;   /* 按安卓的风格，title 左对齐 */
 
   /* padding-left: 10px; */
   background-color: transparent;

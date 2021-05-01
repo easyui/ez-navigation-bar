@@ -155,7 +155,13 @@ Component({
               `height:${this.defaultMenuButtonRect.height}px`,
               `margin-left:${sideDistance}px`
             ])
-          } else {
+          } else if(title){
+            innerLeftStyle = innerLeftStyle.concat([
+              `width:${this.defaultMenuButtonRect.width}px`,
+              `height:${this.defaultMenuButtonRect.height}px`,
+              `margin-left:${sideDistance}px`
+            ])
+          }else {
             innerLeftStyle = innerLeftStyle.concat([`width:auto`, `margin-left:0px`])
           }
 
