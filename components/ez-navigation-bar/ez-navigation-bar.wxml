@@ -19,13 +19,13 @@
         <slot name="left"></slot>
       </block> -->
 
-      <block wx:if="{{back&&!home}}">
+      <block wx:if="{{showBackButton&&!showHomeButton}}">
         <view bindtap="backAction" class="ez-inner__button ez-inner__btn_goback {{leftIconColor}}"></view>
       </block>
-      <block wx:elif="{{!back&&home}}">
+      <block wx:elif="{{!showBackButton&&showHomeButton}}">
         <view bindtap="homeAction" class="ez-inner__button ez-inner__btn_gohome {{leftIconColor}}"></view>
       </block>
-      <block wx:if="{{back && home}}">
+      <block wx:if="{{showBackButton && showHomeButton}}">
         <view class="ez-inner__buttons {{ios ? 'ios' : 'android'}}" >
           <view bindtap="backAction" class="ez-inner__button ez-inner__btn_goback {{leftIconColor}}" >
           </view>
@@ -53,7 +53,7 @@
         <slot name="center"></slot>
       </block>
     </view>
-    <view class='ez-inner__right'>
+    <view class='ez-inner__right' style="{{innerRightStyle}}">
       <slot name="right"></slot>
     </view>
   </view>

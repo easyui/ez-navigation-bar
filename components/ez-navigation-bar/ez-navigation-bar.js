@@ -14,7 +14,8 @@ Component({
     },
     title: {
       type: String,
-      value: ''
+      value: '',
+      observer: '_titleChange'
     },
     theme: {
       type: String,
@@ -29,12 +30,16 @@ Component({
       value: ''
     },
     back: {
-      type: Boolean,
-      value: false
+      type: String,
+      value: "auto" //auto,show,hidden
     },
     home: {
-      type: Boolean,
-      value: false
+      type: String,
+      value: "auto"//auto,show,hidden
+    },
+    excludeAuto:{
+      type: Array,
+      value: []
     },
     searchText: {
       type: String,
@@ -117,22 +122,30 @@ Component({
       const menuButtonRect = wx.getMenuButtonBoundingClientRect
         ? wx.getMenuButtonBoundingClientRect()
         : null //胶囊按钮 frame
-      let sideDistance = 8 //胶囊按钮左右边距
+      this.sideDistance = 8 //胶囊按钮左右边距
       if (isSupportMenuButton) {
         Object.assign(this.defaultMenuButtonRect, menuButtonRect)
       }
       // console.log(menuButtonRect)
       wx.getSystemInfo({
         success: (res) => {
+          // const pages = getCurrentPages(); 
+          // console.log(pages)
+          // console.log(wx.getEnterOptionsSync().scene)
+          // wx.showToast({
+          //   // title: ''+pages[pages.length - 1].__displayReporter.pageType,
+          //   title:""+wx.getEnterOptionsSync().scene
+          // })
           // console.log(res)
+          this.systemInfo = res
           if (isSupportMenuButton) {
-            sideDistance = res.screenWidth - menuButtonRect.right
+            this.sideDistance = res.screenWidth - menuButtonRect.right
           }
-          const { back, home, title, color, background, searchBar } = this.data;
+          const { back, home, excludeAuto ,title, color, background, searchBar } = this.data;
 
           const ios = !!(res.system.toLowerCase().search('ios') + 1)
           const innerHeight = isSupportMenuButton ? ((menuButtonRect.top - res.statusBarHeight) * 2 + menuButtonRect.height) : 44 //导航条操作区高度
-
+          // console.log(innerHeight + res.statusBarHeight)
           let navigationBarStyle = [`height: ${res.statusBarHeight + innerHeight}px`, `background: ${background}`]
           let statusBarStyle = []
           statusBarStyle = statusBarStyle.concat([`color: ${color}`, `background: ${background}`, `height: ${res.statusBarHeight}px`])
@@ -142,25 +155,49 @@ Component({
           innerStyle = innerStyle.concat([`color: ${color}`, `background: ${background}`, `height: ${innerHeight}px`, isSupportMenuButton ? `width:${menuButtonRect.left}px` : ''])
 
           //可操作左边区域，自定义整个navigation bar建议使用左边区域
+          let showBackButton = false
+          let showHomeButton = false
+          if(back == "show"){
+            showBackButton = true
+          }else if(back == "auto"){
+            const pages = getCurrentPages(); 
+            if(pages.length > 1){
+              showBackButton = true
+            }
+
+          }
+
+          if(home == "show"){
+            showHomeButton = true
+          }else if(home == "auto"){
+            const pages = getCurrentPages(); 
+            console.log(excludeAuto)
+            console.log(pages[0].route)
+
+            if(pages.length == 1 && excludeAuto.indexOf(pages[0].route) == -1){
+              showHomeButton = true
+            }
+          }
+
           let innerLeftStyle = []
-          if ((back && !home) || (!back && home)) {
+          if ((showBackButton && !showHomeButton) || (!showBackButton && showHomeButton)) {
             innerLeftStyle = innerLeftStyle.concat([
               `width:${this.defaultMenuButtonRect.width}px`,
               `height:${this.defaultMenuButtonRect.height}px`
-              // `margin-left:${sideDistance}px`
+              // `margin-left:${this.sideDistance}px`
             ]);
-          } else if ((back && home)) {
+          } else if ((showBackButton && showHomeButton)) {
             innerLeftStyle = innerLeftStyle.concat([
               `width:${this.defaultMenuButtonRect.width}px`,
               `height:${this.defaultMenuButtonRect.height}px`,
-              `margin-left:${sideDistance}px`
+              `margin-left:${this.sideDistance}px`
             ])
           } else if(title){
-            innerLeftStyle = innerLeftStyle.concat([
-              `width:${this.defaultMenuButtonRect.width}px`,
-              `height:${this.defaultMenuButtonRect.height}px`,
-              `margin-left:${sideDistance}px`
-            ])
+            // innerLeftStyle = innerLeftStyle.concat([
+            //   `width:${this.defaultMenuButtonRect.width}px`,
+            //   `height:${this.defaultMenuButtonRect.height}px`,
+            //   `margin-left:${this.sideDistance}px`
+            // ])
           }else {
             innerLeftStyle = innerLeftStyle.concat([`width:auto`, `margin-left:0px`])
           }
@@ -169,10 +206,18 @@ Component({
 
           let innerCenterStyle = []
           // innerCenterStyle = [`height: ${res.statusBarHeight}px`]
-          if (title) {
-
+          if (!this._isEmptyStr(title)) {
+            innerCenterStyle = innerCenterStyle.concat([
+              `width:${ res.screenWidth - 2 * (this.defaultMenuButtonRect.width + this.sideDistance)}px`,
+              `left:${this.defaultMenuButtonRect.width + this.sideDistance}px`,
+              `position:fixed`
+            ])
           }
 
+          let innerRightStyle = []
+          innerRightStyle = innerRightStyle.concat([
+            `right:${this.defaultMenuButtonRect.width + this.sideDistance}px`,
+          ])
           let innerSearchBarStyle = []
           // innerCenterStyle = [`height: ${res.statusBarHeight}px`]
           if (searchBar) {
@@ -185,9 +230,12 @@ Component({
           innerStyle = innerStyle.join(";")
           innerLeftStyle = innerLeftStyle.join(";")
           innerCenterStyle = innerCenterStyle.join(";")
+          innerRightStyle = innerRightStyle.join(";")
           innerSearchBarStyle = innerSearchBarStyle.join(";")
 
           this.setData({
+            showBackButton,
+            showHomeButton,
             color,
             background,
             navigationBarStyle,
@@ -196,6 +244,7 @@ Component({
             innerLeftStyle,
             leftIconColor,
             innerCenterStyle,
+            innerRightStyle,
             innerSearchBarStyle,
             ios
           })
@@ -206,11 +255,36 @@ Component({
 
     // 返回事件
     backAction: function () {
+      if(this.data.back == "auto"){
+        const pages = getCurrentPages();
+        if (pages.length >= 2) {
+          wx.navigateBack({
+            delta: 1
+          });
+        } else {
+          // wx.reLaunch({
+          //   url: '/pages/index/index'
+          // });
+          // wx.getUpdateManager().applyUpdate()
+          wx.switchTab({
+            url:'/pages/index/index'
+          })
+        }
+      }
       this.triggerEvent('back', { delta: this.data.delta });
     },
 
     //home事件
     homeAction: function () {
+      if(this.data.home == "auto"){
+        // wx.reLaunch({
+        //   url: '/pages/index/index'
+        // });
+        // wx.getUpdateManager().applyUpdate()
+        wx.switchTab({
+          url:'/pages/index/index'
+        })
+      }
       this.triggerEvent('home', {});
     },
 
@@ -219,6 +293,27 @@ Component({
       this.triggerEvent('search', {});
     },
 
+    _titleChange: function (newVal, oldVal) {
+      // 属性值变化时执行
+      if(!this.systemInfo){//第一次还没走
+        return
+      }
+      if(this._isEmptyStr(newVal) == this._isEmptyStr(oldVal)){
+        return
+      }
+      let innerCenterStyle = []
+      if (!this._isEmptyStr(newVal)) {
+        innerCenterStyle = innerCenterStyle.concat([
+          `width:${ this.systemInfo.screenWidth - 2 * (this.defaultMenuButtonRect.width + this.sideDistance)}px`,
+          `left:${this.defaultMenuButtonRect.width + this.sideDistance}px`,
+          `position:fixed`
+        ])
+      }
+      innerCenterStyle = innerCenterStyle.join(";")
+      this.setData({
+        innerCenterStyle,
+      })
+    },
     //字符串空判断
     _isEmptyStr: function (obj) {
       if (typeof obj == "undefined" || obj == null || obj == "") {

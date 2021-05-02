@@ -38,8 +38,7 @@
       data-type='transparent+noframe'>导航条透明不占位</view>
     <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='update'>动态
     </view>
-    <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='update'>下拉刷新
-    </view>
+
 
     <!-- <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='test'>测试</view>
   <view class='item' hover-class='hover-class' catchtap='navigatItem' data-url='../demo/demo' data-type='test'>测试</view> -->
